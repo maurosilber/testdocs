@@ -30,7 +30,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4  # branch: default
       - uses: actions/checkout@v4  # branch: gh-pages
-        ref: 'gh-pages'
+        with:
+          ref: 'gh-pages'
       - uses: prefix-dev/setup-pixi@v0.8.1
         with:
           environments: docs
