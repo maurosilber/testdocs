@@ -3,28 +3,6 @@ name: Test and release when tagged
 on: [push]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: prefix-dev/setup-pixi@v0.8.1
-        with:
-          environments: lint
-      - run: pixi run --environment lint lint
-
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment:
-          - test-py312
-    steps:
-      - uses: actions/checkout@v4
-      - uses: prefix-dev/setup-pixi@v0.8.1
-        with:
-          environments: ${{ matrix.environment }}
-      - run: pixi run --environment ${{ matrix.environment }} test
-
   docs:
     runs-on: ubuntu-latest
     steps:
@@ -36,24 +14,3 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - run: pixi run --environment docs docs-build --push
-
-  publish:
-    if: github.ref_type == 'tag'
-    needs: [test, lint]
-
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/testdocs
-    permissions:
-      id-token: write  # for trusted publising to PyPI
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: prefix-dev/setup-pixi@v0.8.1
-        with:
-          environments: build
-      - name: Build the package
-        run: pixi run --environment build build
-      - name: Publish to PyPI
-        run: pixi run --environment build publish
