@@ -11,7 +11,7 @@ nav:
 plugins:
   - search
   - mike:
-      canonical_version: latest
+      canonical_version: dev
   - mkdocstrings:
       handlers:
         python:
