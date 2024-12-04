@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 558076e
+_src_path: /Users/maurosilber/git/templates/python-lib-template/
+github_username: maurosilber
+license: MIT
+max_python_version: '3.12'
+min_python_version: '3.12'
+platforms:
+- osx-arm64
+- linux-64
+project_description: testing mkdocs
+project_name: testdocs
+project_slug: testdocs
+your_email: maurosilber@gmail.com
+your_name: Mauro Silberberg
