@@ -32,6 +32,9 @@ jobs:
       - uses: prefix-dev/setup-pixi@v0.8.1
         with:
           environments: docs
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
       - run: pixi run --environment docs docs-build
       - name: Upload docs as artifact
         id: deployment
