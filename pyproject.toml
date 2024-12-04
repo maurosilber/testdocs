@@ -54,6 +54,7 @@ testdocs = { path = ".", editable = true }
 [tool.pixi.environments]
 lint = { features = ["lint"], no-default-feature = true }
 build = { features = ["build"], no-default-feature = true }
+docs = { features = ["docs"], solve-group = "default" }
 test = { features = ["test"], solve-group = "default" }
 test-py312 = ["test", "py312"]
 
@@ -85,3 +86,24 @@ test = "pytest --doctest-modules"
 
 [tool.pixi.feature.py312.dependencies]
 python = "3.12.*"
+
+[tool.pixi.feature.docs.dependencies]
+mkdocs = "*"
+mkdocs-material = "*"
+mkdocstrings = "*"
+mkdocstrings-python = "*"
+mkdocs-jupyter = "*"
+mike = "*"
+
+[tool.pixi.feature.docs.tasks.docs-build]
+cmd = "mike deploy $VERSION"
+inputs = ["src/", "docs/", "mkdocs.yml", "pyproject.toml"]
+outputs = ["docs/"]
+env = { JUPYTER_PLATFORM_DIRS = "1", VERSION = "dev" }
+
+[tool.pixi.feature.docs.tasks.docs-serve]
+cmd = "mike serve"
+depends-on = ["docs-build"]
+
+[tool.pixi.feature.docs.tasks.docs-default]
+cmd = "mike set-default $VERSION"
